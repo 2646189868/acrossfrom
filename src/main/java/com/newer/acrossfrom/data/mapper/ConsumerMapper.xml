@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newer.acrossfrom.data.mapper.ConsumerMapper">
+  <resultMap id="BaseResultMap" type="com.newer.acrossfrom.data.bean.Consumer">
+    <id column="USER_ID" jdbcType="DECIMAL" property="userId" />
+    <result column="USER_CODE" jdbcType="VARCHAR" property="userCode" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="USER_PASSWORD" jdbcType="VARCHAR" property="userPassword" />
+    <result column="SEX" jdbcType="CHAR" property="sex" />
+    <result column="AGE" jdbcType="DECIMAL" property="age" />
+    <result column="ENTRY_DATE" jdbcType="TIMESTAMP" property="entryDate" />
+    <result column="DIMISSION_DATE" jdbcType="TIMESTAMP" property="dimissionDate" />
+    <result column="PHONE_TEL" jdbcType="VARCHAR" property="phoneTel" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="USER_CREATION_TIME" jdbcType="TIMESTAMP" property="userCreationTime" />
+    <result column="LAST_LOGIN_TIME" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="USER_CREATED_BY" jdbcType="VARCHAR" property="userCreatedBy" />
+    <result column="USER_LAST_UPDATE_TIME" jdbcType="TIMESTAMP" property="userLastUpdateTime" />
+    <result column="USER_STATUS" jdbcType="VARCHAR" property="userStatus" />
+  </resultMap>
+
+
+  <select id="login" parameterType="com.newer.acrossfrom.data.bean.Consumer" resultMap="BaseResultMap">
+    select USER_ID, USER_CODE, USER_NAME, USER_PASSWORD, SEX, AGE, ENTRY_DATE, DIMISSION_DATE,
+    PHONE_TEL, EMAIL, USER_CREATION_TIME, LAST_LOGIN_TIME, USER_CREATED_BY, USER_LAST_UPDATE_TIME,
+    USER_STATUS
+    from PS_CONSUMER
+    where USER_CODE=#{userCode} and USER_PASSWORD=#{userPassword}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from PS_CONSUMER
+    where USER_ID = #{userId,jdbcType=DECIMAL}
+  </delete>
+
+  <insert id="insert" parameterType="com.newer.acrossfrom.data.bean.Consumer">
+    insert into PS_CONSUMER (USER_ID, USER_CODE, USER_NAME, 
+      USER_PASSWORD, SEX, AGE, 
+      ENTRY_DATE, DIMISSION_DATE, PHONE_TEL, 
+      EMAIL, USER_CREATION_TIME, LAST_LOGIN_TIME, 
+      USER_CREATED_BY, USER_LAST_UPDATE_TIME, USER_STATUS
+      )
+    values (#{userId,jdbcType=DECIMAL}, #{userCode,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{userPassword,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, #{age,jdbcType=DECIMAL}, 
+      #{entryDate,jdbcType=TIMESTAMP}, #{dimissionDate,jdbcType=TIMESTAMP}, #{phoneTel,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{userCreationTime,jdbcType=TIMESTAMP}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
+      #{userCreatedBy,jdbcType=VARCHAR}, #{userLastUpdateTime,jdbcType=TIMESTAMP}, #{userStatus,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="com.newer.acrossfrom.data.bean.Consumer">
+    update PS_CONSUMER
+    set USER_CODE = #{userCode,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      USER_PASSWORD = #{userPassword,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=CHAR},
+      AGE = #{age,jdbcType=DECIMAL},
+      ENTRY_DATE = #{entryDate,jdbcType=TIMESTAMP},
+      DIMISSION_DATE = #{dimissionDate,jdbcType=TIMESTAMP},
+      PHONE_TEL = #{phoneTel,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      USER_CREATION_TIME = #{userCreationTime,jdbcType=TIMESTAMP},
+      LAST_LOGIN_TIME = #{lastLoginTime,jdbcType=TIMESTAMP},
+      USER_CREATED_BY = #{userCreatedBy,jdbcType=VARCHAR},
+      USER_LAST_UPDATE_TIME = #{userLastUpdateTime,jdbcType=TIMESTAMP},
+      USER_STATUS = #{userStatus,jdbcType=VARCHAR}
+    where USER_ID = #{userId,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select USER_ID, USER_CODE, USER_NAME, USER_PASSWORD, SEX, AGE, ENTRY_DATE, DIMISSION_DATE, 
+    PHONE_TEL, EMAIL, USER_CREATION_TIME, LAST_LOGIN_TIME, USER_CREATED_BY, USER_LAST_UPDATE_TIME, 
+    USER_STATUS
+    from PS_CONSUMER
+    where USER_ID = #{userId,jdbcType=DECIMAL}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select USER_ID, USER_CODE, USER_NAME, USER_PASSWORD, SEX, AGE, ENTRY_DATE, DIMISSION_DATE, 
+    PHONE_TEL, EMAIL, USER_CREATION_TIME, LAST_LOGIN_TIME, USER_CREATED_BY, USER_LAST_UPDATE_TIME, 
+    USER_STATUS
+    from PS_CONSUMER
+  </select>
+
+
+</mapper>
