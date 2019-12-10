@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newer.acrossfrom.data.mapper.PatrolMapper">
+    <resultMap id="PatrolTask" type="com.newer.acrossfrom.data.bean.Inspectiontask">
+        <id property="inspectionId" column="inspection_id"></id>
+        <result property="taskCode" column="task_code"></result>
+        <result property="inspectionTaskName" column="Inspection_Task_Name"></result>
+        <result property="issuedTime" column="issued_time"></result>
+        <result property="finishTime" column="finish_time"></result>
+        <result property="isCancel" column="is_cancel"></result>
+        <association property="lineInfo" javaType="com.newer.acrossfrom.data.bean.LineInfo">
+            <result property="lineCode" column="line_code"></result>
+            <result property="lineName" column="line_name"></result>
+        </association>
+        <association property="poleInfo" javaType="com.newer.acrossfrom.data.bean.PoleInfo">
+            <result property="poleCode" column="pole_code"></result>
+        </association>
+        <association property="endPoleInfo" javaType="com.newer.acrossfrom.data.bean.PoleInfo">
+            <result property="poleCode" column="endPole_code"></result>
+        </association>
+        <association property="consumer" javaType="com.newer.acrossfrom.data.bean.Consumer">
+            <result property="userName" column="user_name"></result>
+        </association>
+        <association property="systemconfig" javaType="com.newer.acrossfrom.data.bean.Systemconfig">
+            <result property="configValueName" column="config_value_name"></result>
+        </association>
+    </resultMap>
+    <select id="listPatrolTask" resultMap="PatrolTask">
+               select*from view_listPatrol
+    </select>
+</mapper>

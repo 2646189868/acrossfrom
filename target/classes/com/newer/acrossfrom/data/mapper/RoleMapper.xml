@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newer.acrossfrom.data.mapper.RoleMapper">
+  <resultMap id="BaseResultMap" type="com.newer.acrossfrom.data.bean.Role">
+    <id column="ROLE_ID" jdbcType="DECIMAL" property="roleId" />
+    <result column="ROLE_NAME" jdbcType="VARCHAR" property="roleName" />
+    <result column="ROLE_CREATION_TIME" jdbcType="TIMESTAMP" property="roleCreationTime" />
+    <result column="ROLE_CREATED_BY" jdbcType="DECIMAL" property="roleCreatedBy" />
+    <result column="ROLE_LAST_UPDATE_TIME" jdbcType="TIMESTAMP" property="roleLastUpdateTime" />
+    <result column="ROLE_IS_START" jdbcType="VARCHAR" property="roleIsStart" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from PS_ROLE
+    where ROLE_ID = #{roleId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.newer.acrossfrom.data.bean.Role">
+    insert into PS_ROLE (ROLE_ID, ROLE_NAME, ROLE_CREATION_TIME, 
+      ROLE_CREATED_BY, ROLE_LAST_UPDATE_TIME, ROLE_IS_START
+      )
+    values (seq_role.nextval, #{roleName,jdbcType=VARCHAR}, sysdate,
+      #{roleCreatedBy,jdbcType=DECIMAL}, sysdate, #{roleIsStart,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.newer.acrossfrom.data.bean.Role">
+    update PS_ROLE
+    set ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+      ROLE_LAST_UPDATE_TIME = sysdate,
+      ROLE_IS_START = #{roleIsStart,jdbcType=VARCHAR}
+    where ROLE_ID = #{roleId,jdbcType=DECIMAL}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select ROLE_ID, ROLE_NAME, ROLE_CREATION_TIME, ROLE_CREATED_BY, ROLE_LAST_UPDATE_TIME, 
+    ROLE_IS_START
+    from PS_ROLE
+    where ROLE_ID = #{roleId,jdbcType=DECIMAL}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select ROLE_ID, ROLE_NAME, ROLE_CREATION_TIME, ROLE_CREATED_BY, ROLE_LAST_UPDATE_TIME, 
+    ROLE_IS_START
+    from PS_ROLE
+  </select>
+  <!--总记录数：-->
+  <select id="getTotalCount"  resultType="int">
+    select count(*) from ps_role
+  </select>
+
+  <!--分页：-->
+  <!--MyBatis实现动态排序时，必须使用${}不能使用#引入参数！！！-->
+  <select id="selectByPage" parameterType="java.util.Map"  resultMap="BaseResultMap">
+    select * from (select row_number() over(order by role_id) no, t.* from ps_role t
+    ) temp
+    <if test='endIndex != null and endIndex!=""'>
+      <![CDATA[where no <=#{endIndex}]]>
+    </if>
+
+    <if test='startIndex != null and startIndex!=""'>
+      and no>=#{startIndex}
+    </if>
+  </select>
+</mapper>
